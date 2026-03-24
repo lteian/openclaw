@@ -56,6 +56,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
@@ -373,7 +374,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
       // ── Node ──
       item {
         Text(
-          "DEVICE",
+          stringResource(R.string.device),
           style = mobileCaption1.copy(fontWeight = FontWeight.Bold, letterSpacing = 1.sp),
           color = mobileAccent,
         )
@@ -383,7 +384,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
           OutlinedTextField(
             value = displayName,
             onValueChange = viewModel::setDisplayName,
-            label = { Text("Name", style = mobileCaption1, color = mobileTextSecondary) },
+            label = { Text(stringResource(R.string.name), style = mobileCaption1, color = mobileTextSecondary) },
             modifier = Modifier.fillMaxWidth().padding(horizontal = 14.dp, vertical = 10.dp),
             textStyle = mobileBody.copy(color = mobileText),
             colors = settingsTextFieldColors(),
@@ -406,7 +407,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
       // ── Media ──
       item {
         Text(
-          "MEDIA",
+          stringResource(R.string.media),
           style = mobileCaption1.copy(fontWeight = FontWeight.Bold, letterSpacing = 1.sp),
           color = mobileAccent,
         )
@@ -416,7 +417,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
           ListItem(
             modifier = Modifier.fillMaxWidth(),
             colors = listItemColors,
-            headlineContent = { Text("Microphone", style = mobileHeadline) },
+            headlineContent = { Text(stringResource(R.string.microphone), style = mobileHeadline) },
             supportingContent = {
               Text(
                 if (micPermissionGranted) stringResource(R.string.granted) else stringResource(R.string.required_for_voice_transcription),
@@ -446,8 +447,8 @@ fun SettingsSheet(viewModel: MainViewModel) {
           ListItem(
             modifier = Modifier.fillMaxWidth(),
             colors = listItemColors,
-            headlineContent = { Text("Camera", style = mobileHeadline) },
-            supportingContent = { Text("Photos and video clips (foreground only).", style = mobileCallout) },
+            headlineContent = { Text(stringResource(R.string.camera), style = mobileHeadline) },
+            supportingContent = { Text(stringResource(R.string.photos_and_video_clips_foreground_only), style = mobileCallout) },
             trailingContent = { Switch(checked = cameraEnabled, onCheckedChange = ::setCameraEnabledChecked) },
           )
         }
@@ -456,7 +457,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
       // ── Notifications & Messaging ──
       item {
         Text(
-          "NOTIFICATIONS",
+          stringResource(R.string.notifications),
           style = mobileCaption1.copy(fontWeight = FontWeight.Bold, letterSpacing = 1.sp),
           color = mobileAccent,
         )
@@ -466,9 +467,9 @@ fun SettingsSheet(viewModel: MainViewModel) {
           ListItem(
             modifier = Modifier.fillMaxWidth(),
             colors = listItemColors,
-            headlineContent = { Text("System Notifications", style = mobileHeadline) },
+            headlineContent = { Text(stringResource(R.string.system_notifications), style = mobileHeadline) },
             supportingContent = {
-              Text("Alerts and foreground service.", style = mobileCallout)
+              Text(stringResource(R.string.alerts_and_foreground_service), style = mobileCallout)
             },
             trailingContent = {
               Button(
@@ -493,9 +494,9 @@ fun SettingsSheet(viewModel: MainViewModel) {
           ListItem(
             modifier = Modifier.fillMaxWidth(),
             colors = listItemColors,
-            headlineContent = { Text("Notification Listener", style = mobileHeadline) },
+            headlineContent = { Text(stringResource(R.string.notification_listener), style = mobileHeadline) },
             supportingContent = {
-              Text("Read and interact with notifications.", style = mobileCallout)
+              Text(stringResource(R.string.read_and_act_on_notifications), style = mobileCallout)
             },
             trailingContent = {
               Button(
@@ -515,9 +516,9 @@ fun SettingsSheet(viewModel: MainViewModel) {
             ListItem(
               modifier = Modifier.fillMaxWidth(),
               colors = listItemColors,
-              headlineContent = { Text("SMS", style = mobileHeadline) },
+              headlineContent = { Text(stringResource(R.string.sms), style = mobileHeadline) },
               supportingContent = {
-                Text("Send and search SMS from this device.", style = mobileCallout)
+                Text(stringResource(R.string.send_and_search_sms_via_gateway), style = mobileCallout)
               },
               trailingContent = {
                 Button(
@@ -545,7 +546,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
       // ── Data Access ──
       item {
         Text(
-          "DATA ACCESS",
+          stringResource(R.string.data_access),
           style = mobileCaption1.copy(fontWeight = FontWeight.Bold, letterSpacing = 1.sp),
           color = mobileAccent,
         )
@@ -555,8 +556,8 @@ fun SettingsSheet(viewModel: MainViewModel) {
           ListItem(
             modifier = Modifier.fillMaxWidth(),
             colors = listItemColors,
-            headlineContent = { Text("Photos", style = mobileHeadline) },
-            supportingContent = { Text("Access recent photos.", style = mobileCallout) },
+            headlineContent = { Text(stringResource(R.string.photos), style = mobileHeadline) },
+            supportingContent = { Text(stringResource(R.string.access_recent_photos), style = mobileCallout) },
             trailingContent = {
               Button(
                 onClick = {
@@ -580,8 +581,8 @@ fun SettingsSheet(viewModel: MainViewModel) {
           ListItem(
             modifier = Modifier.fillMaxWidth(),
             colors = listItemColors,
-            headlineContent = { Text("Contacts", style = mobileHeadline) },
-            supportingContent = { Text("Search and add contacts.", style = mobileCallout) },
+            headlineContent = { Text(stringResource(R.string.contacts), style = mobileHeadline) },
+            supportingContent = { Text(stringResource(R.string.search_and_add_contacts), style = mobileCallout) },
             trailingContent = {
               Button(
                 onClick = {
@@ -605,8 +606,8 @@ fun SettingsSheet(viewModel: MainViewModel) {
           ListItem(
             modifier = Modifier.fillMaxWidth(),
             colors = listItemColors,
-            headlineContent = { Text("Calendar", style = mobileHeadline) },
-            supportingContent = { Text("Read and create events.", style = mobileCallout) },
+            headlineContent = { Text(stringResource(R.string.calendar), style = mobileHeadline) },
+            supportingContent = { Text(stringResource(R.string.read_and_create_events), style = mobileCallout) },
             trailingContent = {
               Button(
                 onClick = {
@@ -631,8 +632,8 @@ fun SettingsSheet(viewModel: MainViewModel) {
             ListItem(
               modifier = Modifier.fillMaxWidth(),
               colors = listItemColors,
-              headlineContent = { Text("Call Log", style = mobileHeadline) },
-              supportingContent = { Text("Search recent call history.", style = mobileCallout) },
+              headlineContent = { Text(stringResource(R.string.call_log), style = mobileHeadline) },
+              supportingContent = { Text(stringResource(R.string.search_recent_call_history), style = mobileCallout) },
               trailingContent = {
                 Button(
                   onClick = {
@@ -658,7 +659,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
             ListItem(
               modifier = Modifier.fillMaxWidth(),
               colors = listItemColors,
-              headlineContent = { Text("Motion", style = mobileHeadline) },
+              headlineContent = { Text(stringResource(R.string.motion), style = mobileHeadline) },
               supportingContent = { Text(stringResource(R.string.track_steps_and_activity), style = mobileCallout) },
               trailingContent = {
                 val motionButtonLabel =
@@ -689,7 +690,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
       // ── Location ──
       item {
         Text(
-          "LOCATION",
+          stringResource(R.string.location),
           style = mobileCaption1.copy(fontWeight = FontWeight.Bold, letterSpacing = 1.sp),
           color = mobileAccent,
         )
@@ -699,8 +700,8 @@ fun SettingsSheet(viewModel: MainViewModel) {
           ListItem(
             modifier = Modifier.fillMaxWidth(),
             colors = listItemColors,
-            headlineContent = { Text("Off", style = mobileHeadline) },
-            supportingContent = { Text("Disable location sharing.", style = mobileCallout) },
+            headlineContent = { Text(stringResource(R.string.off), style = mobileHeadline) },
+            supportingContent = { Text(stringResource(R.string.disable_location_sharing), style = mobileCallout) },
             trailingContent = {
               RadioButton(
                 selected = locationMode == LocationMode.Off,
@@ -712,8 +713,8 @@ fun SettingsSheet(viewModel: MainViewModel) {
           ListItem(
             modifier = Modifier.fillMaxWidth(),
             colors = listItemColors,
-            headlineContent = { Text("While Using", style = mobileHeadline) },
-            supportingContent = { Text("Only while OpenClaw is open.", style = mobileCallout) },
+            headlineContent = { Text(stringResource(R.string.while_using), style = mobileHeadline) },
+            supportingContent = { Text(stringResource(R.string.only_while_openclaw_is_open), style = mobileCallout) },
             trailingContent = {
               RadioButton(
                 selected = locationMode == LocationMode.WhileUsing,
@@ -725,8 +726,8 @@ fun SettingsSheet(viewModel: MainViewModel) {
           ListItem(
             modifier = Modifier.fillMaxWidth(),
             colors = listItemColors,
-            headlineContent = { Text("Precise Location", style = mobileHeadline) },
-            supportingContent = { Text("Use precise GPS when available.", style = mobileCallout) },
+            headlineContent = { Text(stringResource(R.string.precise_location), style = mobileHeadline) },
+            supportingContent = { Text(stringResource(R.string.use_precise_gps), style = mobileCallout) },
             trailingContent = {
               Switch(
                 checked = locationPreciseEnabled,
@@ -741,7 +742,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
       // ── Preferences ──
       item {
         Text(
-          "PREFERENCES",
+          stringResource(R.string.preferences),
           style = mobileCaption1.copy(fontWeight = FontWeight.Bold, letterSpacing = 1.sp),
           color = mobileAccent,
         )
@@ -751,16 +752,16 @@ fun SettingsSheet(viewModel: MainViewModel) {
           ListItem(
             modifier = Modifier.fillMaxWidth(),
             colors = listItemColors,
-            headlineContent = { Text("Prevent Sleep", style = mobileHeadline) },
-            supportingContent = { Text("Keep screen awake while open.", style = mobileCallout) },
+            headlineContent = { Text(stringResource(R.string.prevent_sleep), style = mobileHeadline) },
+            supportingContent = { Text(stringResource(R.string.keep_screen_awake_while_open), style = mobileCallout) },
             trailingContent = { Switch(checked = preventSleep, onCheckedChange = viewModel::setPreventSleep) },
           )
           HorizontalDivider(color = mobileBorder)
           ListItem(
             modifier = Modifier.fillMaxWidth(),
             colors = listItemColors,
-            headlineContent = { Text("Debug Canvas", style = mobileHeadline) },
-            supportingContent = { Text("Show status overlay on canvas.", style = mobileCallout) },
+            headlineContent = { Text(stringResource(R.string.debug_canvas), style = mobileHeadline) },
+            supportingContent = { Text(stringResource(R.string.show_status_overlay_on_canvas), style = mobileCallout) },
             trailingContent = {
               Switch(
                 checked = canvasDebugStatusEnabled,

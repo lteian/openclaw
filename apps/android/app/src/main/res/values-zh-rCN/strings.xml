@@ -87,6 +87,14 @@
     <string name="voice">语音</string>
     <string name="voice_transcription">语音转写</string>
     <string name="voice_transcription_in_voice_tab">语音标签页中的语音转写</string>
+    <!-- Navigation -->
+    <string name="openclaw">OpenClaw</string>
+    <string name="offline">离线</string>
+    <string name="connect_tab">连接</string>
+    <string name="chat_tab">聊天</string>
+    <string name="voice_tab">语音</string>
+    <string name="screen_tab">屏幕</string>
+    <string name="settings_tab">设置</string>
     <string name="required_for_voice_transcription">语音转写需要此权限。</string>
     <string name="thinking">思考中</string>
     <string name="thinking_level">思考级别</string>
@@ -97,6 +105,7 @@
     <string name="system">系统</string>
     <string name="user">用户</string>
     <string name="listening">聆听中</string>
+    <string name="listening_response">正在聆听回复…</string>
     <string name="tap_mic_start">点击麦克风开始</string>
     <string name="speaking">说话中</string>
     <string name="mic_off">麦克风关闭</string>
@@ -110,8 +119,13 @@
     <string name="each_pause_turn">每次暂停自动发送一轮</string>
     <string name="prevent_sleep">防止息屏</string>
     <string name="keep_screen_awake">保持屏幕唤醒</string>
+    <string name="keep_screen_awake_while_open">打开时保持屏幕常亮。</string>
+    <string name="show_status_overlay_on_canvas">在画布上显示状态叠加层。</string>
+    <string name="debug_canvas">调试画布</string>
+    <string name="device">设备</string>
     <string name="only_while_open">仅在 OpenClaw 打开时</string>
     <string name="while_using">使用时</string>
+    <string name="only_while_openclaw_is_open">仅在 OpenClaw 打开时。</string>
     <string name="sending">发送中</string>
     <string name="you">你</string>
     <string name="queued_count">%d 条排队</string>
@@ -189,6 +203,8 @@
     <string name="gateway">网关</string>
     <string name="review">检查</string>
     <string name="media">媒体</string>
+    <string name="data_access">数据访问</string>
+    <string name="preferences">偏好设置</string>
     <string name="read_and_act_on_notifications">读取并对通知执行操作</string>
     <string name="read_and_create_events">读取和创建事件</string>
     <string name="search_and_add_contacts">搜索和添加联系人</string>

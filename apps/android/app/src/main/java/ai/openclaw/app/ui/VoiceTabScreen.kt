@@ -59,6 +59,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -348,7 +349,7 @@ fun VoiceTabScreen(viewModel: MainViewModel) {
           shape = RoundedCornerShape(12.dp),
           colors = ButtonDefaults.buttonColors(containerColor = mobileSurfaceStrong, contentColor = mobileText),
         ) {
-          Text("Open settings", style = mobileCallout.copy(fontWeight = FontWeight.SemiBold))
+          Text(stringResource(R.string.open_settings), style = mobileCallout.copy(fontWeight = FontWeight.SemiBold))
         }
       }
     }
@@ -373,12 +374,12 @@ private fun VoiceTurnBubble(entry: VoiceConversationEntry) {
         verticalArrangement = Arrangement.spacedBy(3.dp),
       ) {
         Text(
-          if (isUser) stringResource(R.string.you) else "OpenClaw",
+          if (isUser) stringResource(R.string.you) else stringResource(R.string.openclaw),
           style = mobileCaption2.copy(fontWeight = FontWeight.SemiBold, letterSpacing = 0.6.sp),
           color = if (isUser) mobileAccent else mobileTextSecondary,
         )
         Text(
-          if (entry.isStreaming && entry.text.isBlank()) "Listening response…" else entry.text,
+          if (entry.isStreaming && entry.text.isBlank()) stringResource(R.string.listening_response) else entry.text,
           style = mobileCallout,
           color = mobileText,
         )
@@ -402,7 +403,7 @@ private fun VoiceThinkingBubble() {
         verticalAlignment = Alignment.CenterVertically,
       ) {
         ThinkingDots(color = mobileTextSecondary)
-        Text("OpenClaw is thinking…", style = mobileCallout, color = mobileTextSecondary)
+        Text(stringResource(R.string.openclaw_is_thinking), style = mobileCallout, color = mobileTextSecondary)
       }
     }
   }

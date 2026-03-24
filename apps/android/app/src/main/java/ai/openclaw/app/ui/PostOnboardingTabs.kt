@@ -41,6 +41,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.zIndex
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
@@ -48,17 +49,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ai.openclaw.app.MainViewModel
 import ai.openclaw.app.R
-import androidx.compose.ui.res.stringResource
 
 private enum class HomeTab(
-  val label: String,
+  val labelResId: Int,
   val icon: ImageVector,
 ) {
-  Connect(label = "Connect", icon = Icons.Default.CheckCircle),
-  Chat(label = "Chat", icon = Icons.Default.ChatBubble),
-  Voice(label = "Voice", icon = Icons.Default.RecordVoiceOver),
-  Screen(label = "Screen", icon = Icons.AutoMirrored.Filled.ScreenShare),
-  Settings(label = "Settings", icon = Icons.Default.Settings),
+  Connect(labelResId = R.string.connect_tab, icon = Icons.Default.CheckCircle),
+  Chat(labelResId = R.string.chat_tab, icon = Icons.Default.ChatBubble),
+  Voice(labelResId = R.string.voice_tab, icon = Icons.Default.RecordVoiceOver),
+  Screen(labelResId = R.string.screen_tab, icon = Icons.AutoMirrored.Filled.ScreenShare),
+  Settings(labelResId = R.string.settings_tab, icon = Icons.Default.Settings),
 }
 
 private enum class StatusVisual {
@@ -242,7 +242,7 @@ private fun TopStatusBar(
       horizontalArrangement = Arrangement.SpaceBetween,
     ) {
       Text(
-        text = "OpenClaw",
+        text = stringResource(R.string.app_name),
         style = mobileTitle2,
         color = mobileText,
       )
@@ -320,11 +320,11 @@ private fun BottomTabBar(
             ) {
               Icon(
                 imageVector = tab.icon,
-                contentDescription = tab.label,
+                contentDescription = stringResource(tab.labelResId),
                 tint = if (active) mobileAccent else mobileTextTertiary,
               )
               Text(
-                text = tab.label,
+                text = stringResource(tab.labelResId),
                 color = if (active) mobileAccent else mobileTextSecondary,
                 style = mobileCaption2.copy(fontWeight = if (active) FontWeight.Bold else FontWeight.Medium),
               )

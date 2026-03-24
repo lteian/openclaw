@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Build
 import android.widget.Toast
 import ai.openclaw.app.BuildConfig
+import ai.openclaw.app.R
 
 internal fun openClawAndroidVersionLabel(): String {
   val versionName = BuildConfig.VERSION_NAME.trim().ifEmpty { "dev" }
@@ -73,5 +74,5 @@ internal fun copyGatewayDiagnosticsReport(
   val clipboard = context.getSystemService(ClipboardManager::class.java) ?: return
   val report = buildGatewayDiagnosticsReport(screen = screen, gatewayAddress = gatewayAddress, statusText = statusText)
   clipboard.setPrimaryClip(ClipData.newPlainText("OpenClaw gateway diagnostics", report))
-  Toast.makeText(context, "Copied gateway diagnostics", Toast.LENGTH_SHORT).show()
+  Toast.makeText(context, context.getString(R.string.copied_gateway_diagnostics), Toast.LENGTH_SHORT).show()
 }
