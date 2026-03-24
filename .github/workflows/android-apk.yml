@@ -1,0 +1,126 @@
+name: Android APK Build
+
+on:
+  workflow_dispatch:
+    inputs:
+      variant:
+        description: 'Build variant'
+        required: false
+        default: 'play'
+        type: choice
+        options:
+          - play
+          - third-party
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/android/**'
+      - '.github/workflows/android-apk.yml'
+  pull_request:
+    paths:
+      - 'apps/android/**'
+      - '.github/workflows/android-apk.yml'
+
+concurrency:
+  group: android-apk-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-apk:
+    runs-on: blacksmith-16vcpu-ubuntu-2404
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          submodules: false
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Setup Android SDK cmdline-tools
+        run: |
+          set -euo pipefail
+          ANDROID_SDK_ROOT="$HOME/.android-sdk"
+          CMDLINE_TOOLS_VERSION="12266719"
+          ARCHIVE="commandlinetools-linux-${CMDLINE_TOOLS_VERSION}_latest.zip"
+          URL="https://dl.google.com/android/repository/${ARCHIVE}"
+
+          mkdir -p "$ANDROID_SDK_ROOT/cmdline-tools"
+          curl -fsSL "$URL" -o "/tmp/${ARCHIVE}"
+          rm -rf "$ANDROID_SDK_ROOT/cmdline-tools/latest"
+          unzip -q "/tmp/${ARCHIVE}" -d "$ANDROID_SDK_ROOT/cmdline-tools"
+          mv "$ANDROID_SDK_ROOT/cmdline-tools/cmdline-tools" "$ANDROID_SDK_ROOT/cmdline-tools/latest"
+
+          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
+          echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
+          echo "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin" >> "$GITHUB_PATH"
+          echo "$ANDROID_SDK_ROOT/platform-tools" >> "$GITHUB_PATH"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v5
+        with:
+          gradle-version: 8.11.1
+
+      - name: Install Android SDK packages
+        run: |
+          yes | sdkmanager --sdk_root="${ANDROID_SDK_ROOT}" --licenses >/dev/null 2>&1
+          sdkmanager --sdk_root="${ANDROID_SDK_ROOT}" --install \
+            "platform-tools" \
+            "platforms;android-36" \
+            "build-tools;36.0.0"
+
+      - name: Build Play variant APK
+        if: inputs.variant == '' || inputs.variant == 'play'
+        working-directory: apps/android
+        run: ./gradlew --no-daemon :app:assemblePlayDebug
+
+      - name: Build Third-party variant APK
+        if: inputs.variant == 'third-party'
+        working-directory: apps/android
+        run: ./gradlew --no-daemon :app:assembleThirdPartyDebug
+
+      - name: Find APKs
+        id: find-apk
+        run: |
+          set -euo pipefail
+          APK_DIR="apps/android/app/build/outputs/apk"
+          if [ -d "$APK_DIR/play/debug" ]; then
+            APK_PATH=$(find "$APK_DIR/play/debug" -name "*.apk" | head -1)
+            echo "apk_path=$APK_PATH" >> "$GITHUB_OUTPUT"
+            echo "apk_name=openclaw-play-debug.apk" >> "$GITHUB_OUTPUT"
+          elif [ -d "$APK_DIR/thirdParty/debug" ]; then
+            APK_PATH=$(find "$APK_DIR/thirdParty/debug" -name "*.apk" | head -1)
+            echo "apk_path=$APK_PATH" >> "$GITHUB_OUTPUT"
+            echo "apk_name=openclaw-third-party-debug.apk" >> "$GITHUB_OUTPUT"
+          else
+            echo "No APK found in $APK_DIR"
+            ls -R "$APK_DIR" || true
+            exit 1
+          fi
+          echo "Found APK: $apk_path"
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: openclaw-android-apk-${{ github.run_number }}
+          path: ${{ steps.find-apk.outputs.apk_path }}
+          retention-days: 7
+          if-no-files-found: error
+
+      - name: Upload APK as release asset
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: android-apk-${{ github.run_number }}
+          release_name: Android APK Build #${{ github.run_number }}
+          draft: true
+          prerelease: true
+          artifacts: ${{ steps.find-apk.outputs.apk_path }}
+          artifact_name: openclaw-android-${{ inputs.variant || 'play' }}-debug
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
