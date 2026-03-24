@@ -47,6 +47,8 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import ai.openclaw.app.MainViewModel
+import ai.openclaw.app.R
+import androidx.compose.ui.res.stringResource
 
 private enum class HomeTab(
   val label: String,
@@ -262,7 +264,7 @@ private fun TopStatusBar(
             Box(modifier = Modifier.padding(4.dp))
           }
           Text(
-            text = statusText.trim().ifEmpty { "Offline" },
+            text = statusText.trim().ifEmpty { stringResource(R.string.offline) },
             style = mobileCaption1,
             color = chipText,
             maxLines = 1,

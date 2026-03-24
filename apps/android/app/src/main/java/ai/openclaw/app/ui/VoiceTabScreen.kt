@@ -69,8 +69,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import ai.openclaw.app.MainViewModel
+import ai.openclaw.app.R
 import ai.openclaw.app.voice.VoiceConversationEntry
 import ai.openclaw.app.voice.VoiceConversationRole
+import androidx.compose.ui.res.stringResource
 import kotlin.math.max
 
 @Composable
@@ -161,12 +163,12 @@ fun VoiceTabScreen(viewModel: MainViewModel) {
                 tint = mobileTextTertiary,
               )
               Text(
-                "Tap the mic to start",
+                stringResource(R.string.tap_mic_start),
                 style = mobileHeadline,
                 color = mobileTextSecondary,
               )
               Text(
-                "Each pause sends a turn automatically.",
+                stringResource(R.string.each_pause_turn),
                 style = mobileCallout,
                 color = mobileTextTertiary,
               )
@@ -225,13 +227,13 @@ fun VoiceTabScreen(viewModel: MainViewModel) {
           ) {
             Icon(
               imageVector = if (speakerEnabled) Icons.AutoMirrored.Filled.VolumeUp else Icons.AutoMirrored.Filled.VolumeOff,
-              contentDescription = if (speakerEnabled) "Mute speaker" else "Unmute speaker",
+              contentDescription = if (speakerEnabled) stringResource(R.string.mute_speaker) else stringResource(R.string.unmute_speaker),
               modifier = Modifier.size(22.dp),
               tint = if (speakerEnabled) mobileTextSecondary else mobileDanger,
             )
           }
           Text(
-            if (speakerEnabled) "Speaker" else "Muted",
+            if (speakerEnabled) stringResource(R.string.speaker) else stringResource(R.string.muted),
             style = mobileCaption2,
             color = if (speakerEnabled) mobileTextTertiary else mobileDanger,
           )
@@ -281,7 +283,7 @@ fun VoiceTabScreen(viewModel: MainViewModel) {
           ) {
             Icon(
               imageVector = if (micEnabled) Icons.Default.MicOff else Icons.Default.Mic,
-              contentDescription = if (micEnabled) "Turn microphone off" else "Turn microphone on",
+              contentDescription = if (micEnabled) stringResource(R.string.turn_microphone_off) else stringResource(R.string.turn_microphone_on),
               modifier = Modifier.size(24.dp),
             )
           }
@@ -299,11 +301,11 @@ fun VoiceTabScreen(viewModel: MainViewModel) {
       val queueCount = micQueuedMessages.size
       val stateText =
         when {
-          queueCount > 0 -> "$queueCount queued"
-          micIsSending -> "Sending"
-          micCooldown -> "Cooldown"
-          micEnabled -> "Listening"
-          else -> "Mic off"
+          queueCount > 0 -> context.getString(R.string.queued_count, queueCount)
+          micIsSending -> stringResource(R.string.sending)
+          micCooldown -> stringResource(R.string.cooldown)
+          micEnabled -> stringResource(R.string.listening)
+          else -> stringResource(R.string.mic_off)
         }
       val stateColor =
         when {
@@ -371,7 +373,7 @@ private fun VoiceTurnBubble(entry: VoiceConversationEntry) {
         verticalArrangement = Arrangement.spacedBy(3.dp),
       ) {
         Text(
-          if (isUser) "You" else "OpenClaw",
+          if (isUser) stringResource(R.string.you) else "OpenClaw",
           style = mobileCaption2.copy(fontWeight = FontWeight.SemiBold, letterSpacing = 0.6.sp),
           color = if (isUser) mobileAccent else mobileTextSecondary,
         )

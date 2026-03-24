@@ -68,7 +68,9 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import ai.openclaw.app.BuildConfig
 import ai.openclaw.app.LocationMode
 import ai.openclaw.app.MainViewModel
+import ai.openclaw.app.R
 import ai.openclaw.app.node.DeviceNotificationListenerService
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun SettingsSheet(viewModel: MainViewModel) {
@@ -417,7 +419,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
             headlineContent = { Text("Microphone", style = mobileHeadline) },
             supportingContent = {
               Text(
-                if (micPermissionGranted) "Granted" else "Required for voice transcription.",
+                if (micPermissionGranted) stringResource(R.string.granted) else stringResource(R.string.required_for_voice_transcription),
                 style = mobileCallout,
               )
             },
@@ -434,7 +436,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
                 shape = RoundedCornerShape(14.dp),
               ) {
                 Text(
-                  if (micPermissionGranted) "Manage" else "Grant",
+                  if (micPermissionGranted) stringResource(R.string.manage) else stringResource(R.string.grant),
                   style = mobileCallout.copy(fontWeight = FontWeight.Bold),
                 )
               }
@@ -481,7 +483,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
                 shape = RoundedCornerShape(14.dp),
               ) {
                 Text(
-                  if (notificationsPermissionGranted) "Manage" else "Grant",
+                  if (notificationsPermissionGranted) stringResource(R.string.manage) else stringResource(R.string.grant),
                   style = mobileCallout.copy(fontWeight = FontWeight.Bold),
                 )
               }
@@ -502,7 +504,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
                 shape = RoundedCornerShape(14.dp),
               ) {
                 Text(
-                  if (notificationListenerEnabled) "Manage" else "Enable",
+                  if (notificationListenerEnabled) stringResource(R.string.manage) else stringResource(R.string.enable),
                   style = mobileCallout.copy(fontWeight = FontWeight.Bold),
                 )
               }
@@ -530,7 +532,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
                   shape = RoundedCornerShape(14.dp),
                 ) {
                   Text(
-                    if (smsPermissionGranted) "Manage" else "Grant",
+                    if (smsPermissionGranted) stringResource(R.string.manage) else stringResource(R.string.grant),
                     style = mobileCallout.copy(fontWeight = FontWeight.Bold),
                   )
                 }
@@ -568,7 +570,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
                 shape = RoundedCornerShape(14.dp),
               ) {
                 Text(
-                  if (photosPermissionGranted) "Manage" else "Grant",
+                  if (photosPermissionGranted) stringResource(R.string.manage) else stringResource(R.string.grant),
                   style = mobileCallout.copy(fontWeight = FontWeight.Bold),
                 )
               }
@@ -593,7 +595,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
                 shape = RoundedCornerShape(14.dp),
               ) {
                 Text(
-                  if (contactsPermissionGranted) "Manage" else "Grant",
+                  if (contactsPermissionGranted) stringResource(R.string.manage) else stringResource(R.string.grant),
                   style = mobileCallout.copy(fontWeight = FontWeight.Bold),
                 )
               }
@@ -618,7 +620,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
                 shape = RoundedCornerShape(14.dp),
               ) {
                 Text(
-                  if (calendarPermissionGranted) "Manage" else "Grant",
+                  if (calendarPermissionGranted) stringResource(R.string.manage) else stringResource(R.string.grant),
                   style = mobileCallout.copy(fontWeight = FontWeight.Bold),
                 )
               }
@@ -644,7 +646,7 @@ fun SettingsSheet(viewModel: MainViewModel) {
                   shape = RoundedCornerShape(14.dp),
                 ) {
                   Text(
-                    if (callLogPermissionGranted) "Manage" else "Grant",
+                    if (callLogPermissionGranted) stringResource(R.string.manage) else stringResource(R.string.grant),
                     style = mobileCallout.copy(fontWeight = FontWeight.Bold),
                   )
                 }
@@ -657,13 +659,13 @@ fun SettingsSheet(viewModel: MainViewModel) {
               modifier = Modifier.fillMaxWidth(),
               colors = listItemColors,
               headlineContent = { Text("Motion", style = mobileHeadline) },
-              supportingContent = { Text("Track steps and activity.", style = mobileCallout) },
+              supportingContent = { Text(stringResource(R.string.track_steps_and_activity), style = mobileCallout) },
               trailingContent = {
                 val motionButtonLabel =
                   when {
-                    !motionPermissionRequired -> "Manage"
-                    motionPermissionGranted -> "Manage"
-                    else -> "Grant"
+                    !motionPermissionRequired -> stringResource(R.string.manage)
+                    motionPermissionGranted -> stringResource(R.string.manage)
+                    else -> stringResource(R.string.grant)
                   }
                 Button(
                   onClick = {
