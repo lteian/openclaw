@@ -1,0 +1,59 @@
+name: Build Android APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Build Play Debug APK
+        run: |
+          cd apps/android
+          ./gradlew :app:assemblePlayDebug --no-daemon
+
+      - name: Upload Play Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: openclaw-play-debug
+          path: apps/android/app/build/outputs/apk/play/debug/*.apk
+
+  build-third-party:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Build Third-Party Debug APK
+        run: |
+          cd apps/android
+          ./gradlew :app:assembleThirdPartyDebug --no-daemon
+
+      - name: Upload Third-Party Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: openclaw-third-party-debug
+          path: apps/android/app/build/outputs/apk/thirdParty/debug/*.apk
